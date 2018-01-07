@@ -486,14 +486,7 @@ Feed.prototype.clear = function (start, end, opts, cb) { // TODO: use same argum
 }
 
 Feed.prototype.signature = function(index, cb) {
-  if (typeof index === 'function') {
-    // TODO: it appears that this always results in index = length - 1
-    //       is that true?
-    var roots = this.tree.roots()
-    var lastRoot = roots[roots.length - 1]
-    var verifiedBy = this.tree.verifiedBy(lastRoot)
-    return this.signature(verifiedBy / 2 - 1, index)
-  }
+  if (typeof index === 'function') return this.signature(this.length - 1, index)
 
   this._storage.nextSignature(index, cb)
 }
