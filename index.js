@@ -488,6 +488,8 @@ Feed.prototype.clear = function (start, end, opts, cb) { // TODO: use same argum
 Feed.prototype.signature = function (index, cb) {
   if (typeof index === 'function') return this.signature(this.length - 1, index)
 
+  if (index < 0 || index >= this.length) return cb(new Error('No signature available for this index'))
+
   this._storage.nextSignature(index, cb)
 }
 
