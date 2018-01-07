@@ -491,6 +491,36 @@ Feed.prototype.signature = function(index, cb) {
   this._storage.nextSignature(index, cb)
 }
 
+Feed.prototype.verify = function(index, signature, cb) {
+  var indexes = flat.fullRoots(index * 2 + 2)
+  var roots = new Array(indexes.length)
+  var error = null
+  var pending = roots.length
+  var self = this
+
+  for (var i = 0; i < indexes.length; ++ i) {
+    this._storage.getNode(indexes[i], onnode)
+  }
+
+  function onnode (err, node) {
+    if (err) error = err
+    if (node) roots[indexes.indexOf(node.index)] = node
+    if (!--pending) verify(error)
+  }
+
+  function verify (err) {
+    if (err) return cb(err)
+
+    var checksum = crypto.tree(roots)
+
+    if (!crypto.verify(checksum, signature, self.key)) {
+      cb(new Error('Signature verification failed'))
+    } else {
+      cb(null, true)
+    }
+  }
+}
+
 Feed.prototype.seek = function (bytes, opts, cb) {
   if (typeof opts === 'function') return this.seek(bytes, null, opts)
   if (!opts) opts = {}
