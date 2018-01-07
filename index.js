@@ -485,20 +485,20 @@ Feed.prototype.clear = function (start, end, opts, cb) { // TODO: use same argum
   })
 }
 
-Feed.prototype.signature = function(index, cb) {
+Feed.prototype.signature = function (index, cb) {
   if (typeof index === 'function') return this.signature(this.length - 1, index)
 
   this._storage.nextSignature(index, cb)
 }
 
-Feed.prototype.verify = function(index, signature, cb) {
+Feed.prototype.verify = function (index, signature, cb) {
   var indexes = flat.fullRoots(index * 2 + 2)
   var roots = new Array(indexes.length)
   var error = null
   var pending = roots.length
   var self = this
 
-  for (var i = 0; i < indexes.length; ++ i) {
+  for (var i = 0; i < indexes.length; ++i) {
     this._storage.getNode(indexes[i], onnode)
   }
 
