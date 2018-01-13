@@ -11,7 +11,7 @@ var thunky = require('thunky')
 var batcher = require('atomic-batcher')
 var inherits = require('inherits')
 var events = require('events')
-var raf = require('random-access-file')
+var raf = null
 var bitfield = require('./lib/bitfield')
 var sparseBitfield = require('sparse-bitfield')
 var treeIndex = require('./lib/tree-index')
@@ -1133,6 +1133,9 @@ function isBlock (index) {
 }
 
 function defaultStorage (dir) {
+  // using global stops react-native/expo from automatically pulling it in
+  if (!raf) raf = global.require('random-access-file')
+
   return function (name) {
     return raf(name, {directory: dir})
   }

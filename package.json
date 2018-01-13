@@ -18,13 +18,15 @@
     "memory-pager": "^1.0.2",
     "merkle-tree-stream": "^3.0.3",
     "process-nextick-args": "^1.0.7",
-    "random-access-file": "^1.5.0",
     "sodium-universal": "^2.0.0",
     "sparse-bitfield": "^3.0.0",
     "thunky": "^1.0.1",
     "uint64be": "^2.0.1",
     "unordered-array-remove": "^1.0.2",
     "unordered-set": "^2.0.0"
+  },
+  "peerDependencies": {
+    "random-access-file": "^1.5.0"
   },
   "devDependencies": {
     "random-access-memory": "^2.2.0",
